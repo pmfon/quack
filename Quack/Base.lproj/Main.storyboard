@@ -1,37 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Quack View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BV1-FR-VrT" customClass="QuackViewController" customModule="Quack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U0K-SW-4ec">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <arskView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EO5-fy-WZq">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="607"/>
                             </arskView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Pz-E9-Blu" userLabel="Hit Area">
+                                <rect key="frame" x="51.5" y="547" width="272" height="60"/>
+                                <subviews>
+                                    <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rbU-0C-UMn">
+                                        <rect key="frame" x="8" y="15" width="256" height="31"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="minimumTrackTintColor" red="0.0" green="0.43137254901960786" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="maximumTrackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="thumbTintColor" red="0.0" green="0.43137254899999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="valueChangedWithSlider:" destination="BV1-FR-VrT" eventType="valueChanged" id="vf8-I3-4KG"/>
+                                        </connections>
+                                    </slider>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="rbU-0C-UMn" secondAttribute="trailing" constant="10" id="16Z-3Z-eln"/>
+                                    <constraint firstAttribute="width" constant="272" id="329-zO-efo"/>
+                                    <constraint firstItem="rbU-0C-UMn" firstAttribute="centerY" secondItem="6Pz-E9-Blu" secondAttribute="centerY" id="6fN-Zk-Kyz"/>
+                                    <constraint firstAttribute="height" constant="60" id="Ns4-mw-wQ6"/>
+                                    <constraint firstItem="rbU-0C-UMn" firstAttribute="centerX" secondItem="6Pz-E9-Blu" secondAttribute="centerX" id="kJF-a7-FDT"/>
+                                    <constraint firstItem="rbU-0C-UMn" firstAttribute="leading" secondItem="6Pz-E9-Blu" secondAttribute="leading" constant="10" id="mOo-dJ-GPZ"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="BMP-Kz-8Gv" appends="YES" id="x9B-Ja-C3X"/>
+                                </connections>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CDm-Ps-wtt">
+                                <rect key="frame" x="0.0" y="607" width="375" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7tD-n3-5uU">
+                                        <rect key="frame" x="120.5" y="9" width="134" height="42"/>
+                                        <color key="backgroundColor" red="0.0" green="0.43137254899999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                        <state key="normal" title="Start Tracking"/>
+                                        <state key="selected" title="Stop Tracking"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="didToggleSession:" destination="BV1-FR-VrT" eventType="touchUpInside" id="yqT-V4-Ofu"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="QDb-qv-8zJ"/>
+                                    <constraint firstItem="7tD-n3-5uU" firstAttribute="centerX" secondItem="CDm-Ps-wtt" secondAttribute="centerX" id="c43-Ue-VE1"/>
+                                    <constraint firstItem="7tD-n3-5uU" firstAttribute="centerY" secondItem="CDm-Ps-wtt" secondAttribute="centerY" id="tWo-f3-VSR"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="CDm-Ps-wtt" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="5Hb-zi-bMU"/>
+                            <constraint firstItem="CDm-Ps-wtt" firstAttribute="trailing" secondItem="fQZ-KI-GVf" secondAttribute="trailing" id="9CJ-N8-ENI"/>
                             <constraint firstItem="EO5-fy-WZq" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="GsS-dJ-CKf"/>
-                            <constraint firstItem="EO5-fy-WZq" firstAttribute="bottom" secondItem="fQZ-KI-GVf" secondAttribute="bottom" id="VpT-BR-CcM"/>
+                            <constraint firstItem="CDm-Ps-wtt" firstAttribute="bottom" secondItem="fQZ-KI-GVf" secondAttribute="bottom" id="Jrz-Pf-sQg"/>
+                            <constraint firstItem="6Pz-E9-Blu" firstAttribute="bottom" secondItem="EO5-fy-WZq" secondAttribute="bottom" id="UuE-g9-Ysi"/>
                             <constraint firstItem="EO5-fy-WZq" firstAttribute="trailing" secondItem="fQZ-KI-GVf" secondAttribute="trailing" id="XyZ-9z-H8e"/>
+                            <constraint firstItem="6Pz-E9-Blu" firstAttribute="centerX" secondItem="U0K-SW-4ec" secondAttribute="centerX" id="dSz-xT-2ds"/>
                             <constraint firstItem="EO5-fy-WZq" firstAttribute="top" secondItem="U0K-SW-4ec" secondAttribute="top" id="rJc-2c-zQA"/>
+                            <constraint firstItem="CDm-Ps-wtt" firstAttribute="top" secondItem="EO5-fy-WZq" secondAttribute="bottom" id="uhZ-Dq-fbV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>
                     </view>
                     <connections>
                         <outlet property="sceneView" destination="EO5-fy-WZq" id="YuC-8q-ovz"/>
+                        <outlet property="toggleSession" destination="7tD-n3-5uU" id="xDv-5J-QlA"/>
+                        <outlet property="trackingIoUSetting" destination="rbU-0C-UMn" id="Qfo-AZ-ZqA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="BMP-Kz-8Gv">
+                    <connections>
+                        <action selector="didTapSettingsArea:" destination="BV1-FR-VrT" id="tS1-fd-tTY"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
+            <point key="canvasLocation" x="140" y="105.69715142428787"/>
         </scene>
     </scenes>
 </document>

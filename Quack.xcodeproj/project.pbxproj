@@ -7,25 +7,63 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB3AD461219DEE4000B55169 /* cat.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = EB3AD460219DEE4000B55169 /* cat.mlmodel */; };
+		EB43B06B219645F00022A8C9 /* QuackARDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB43B06A219645F00022A8C9 /* QuackARDelegate.swift */; };
+		EB43B06E219647260022A8C9 /* Duck.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = EB43B06D219647260022A8C9 /* Duck.mlmodel */; };
 		EB8DB2B521925ACB004FF9C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8DB2B421925ACB004FF9C5 /* AppDelegate.swift */; };
 		EB8DB2B721925ACB004FF9C5 /* Scene.sks in Resources */ = {isa = PBXBuildFile; fileRef = EB8DB2B621925ACB004FF9C5 /* Scene.sks */; };
 		EB8DB2B921925ACB004FF9C5 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8DB2B821925ACB004FF9C5 /* Scene.swift */; };
-		EB8DB2BB21925ACB004FF9C5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8DB2BA21925ACB004FF9C5 /* ViewController.swift */; };
+		EB8DB2BB21925ACB004FF9C5 /* QuackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8DB2BA21925ACB004FF9C5 /* QuackViewController.swift */; };
 		EB8DB2BE21925ACB004FF9C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB8DB2BC21925ACB004FF9C5 /* Main.storyboard */; };
 		EB8DB2C021925ACF004FF9C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB8DB2BF21925ACF004FF9C5 /* Assets.xcassets */; };
 		EB8DB2C321925ACF004FF9C5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB8DB2C121925ACF004FF9C5 /* LaunchScreen.storyboard */; };
+		EB934CA321AF23010009B85B /* TrackedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB934CA221AF23010009B85B /* TrackedObject.swift */; };
+		EB95932D21AB23ED003C735D /* DuckTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB95932C21AB23ED003C735D /* DuckTracker.swift */; };
+		EBB9632E21973538005381CF /* ObjectTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBB9632D21973538005381CF /* ObjectTracker.swift */; };
+		EBB9633721974149005381CF /* QuackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBB9633621974149005381CF /* QuackTests.swift */; };
+		EBB9633F2197419E005381CF /* UIImage+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBB9633E2197419E005381CF /* UIImage+TestHelpers.swift */; };
+		EBB96341219760BA005381CF /* Duck.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = EB43B06D219647260022A8C9 /* Duck.mlmodel */; };
+		EBB963492197647D005381CF /* duck.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EBB963482197647D005381CF /* duck.jpg */; };
+		EBD9F28621A63F2A005954CC /* VisionOutputConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD9F28521A63F2A005954CC /* VisionOutputConverter.swift */; };
+		EBF7051A21A083CE00EE909B /* VisionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF7051921A083CE00EE909B /* VisionHelper.swift */; };
+		EBF7051C21A0CD1600EE909B /* BoundingBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF7051B21A0CD1600EE909B /* BoundingBoxView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		EBB9633921974149005381CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EB8DB2A921925ACB004FF9C5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EB8DB2B021925ACB004FF9C5;
+			remoteInfo = Quack;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		EB3AD460219DEE4000B55169 /* cat.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = cat.mlmodel; sourceTree = "<group>"; };
+		EB43B06A219645F00022A8C9 /* QuackARDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuackARDelegate.swift; sourceTree = "<group>"; };
+		EB43B06D219647260022A8C9 /* Duck.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Duck.mlmodel; sourceTree = "<group>"; };
 		EB8DB2B121925ACB004FF9C5 /* Quack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB8DB2B421925ACB004FF9C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB8DB2B621925ACB004FF9C5 /* Scene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Scene.sks; sourceTree = "<group>"; };
 		EB8DB2B821925ACB004FF9C5 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
-		EB8DB2BA21925ACB004FF9C5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EB8DB2BA21925ACB004FF9C5 /* QuackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuackViewController.swift; sourceTree = "<group>"; };
 		EB8DB2BD21925ACB004FF9C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EB8DB2BF21925ACF004FF9C5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EB8DB2C221925ACF004FF9C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EB8DB2C421925ACF004FF9C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EB934CA221AF23010009B85B /* TrackedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedObject.swift; sourceTree = "<group>"; };
+		EB95932C21AB23ED003C735D /* DuckTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckTracker.swift; sourceTree = "<group>"; };
+		EBB9632D21973538005381CF /* ObjectTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectTracker.swift; sourceTree = "<group>"; };
+		EBB9633421974149005381CF /* QuackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBB9633621974149005381CF /* QuackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuackTests.swift; sourceTree = "<group>"; };
+		EBB9633821974149005381CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EBB9633E2197419E005381CF /* UIImage+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+TestHelpers.swift"; sourceTree = "<group>"; };
+		EBB96342219763F2005381CF /* duck.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = duck.jpg; path = QuackTests/Resources/duck.jpg; sourceTree = "<group>"; };
+		EBB963482197647D005381CF /* duck.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = duck.jpg; sourceTree = "<group>"; };
+		EBD9F28521A63F2A005954CC /* VisionOutputConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionOutputConverter.swift; sourceTree = "<group>"; };
+		EBF7051921A083CE00EE909B /* VisionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionHelper.swift; sourceTree = "<group>"; };
+		EBF7051B21A0CD1600EE909B /* BoundingBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBoxView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,13 +74,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EBB9633121974149005381CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB43B06C219646EB0022A8C9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EB3AD460219DEE4000B55169 /* cat.mlmodel */,
+				EB43B06D219647260022A8C9 /* Duck.mlmodel */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		EB8DB2A821925ACB004FF9C5 = {
 			isa = PBXGroup;
 			children = (
+				EBB96342219763F2005381CF /* duck.jpg */,
 				EB8DB2B321925ACB004FF9C5 /* Quack */,
+				EBB9633521974149005381CF /* QuackTests */,
 				EB8DB2B221925ACB004FF9C5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				EB8DB2B121925ACB004FF9C5 /* Quack.app */,
+				EBB9633421974149005381CF /* QuackTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -58,16 +115,51 @@
 		EB8DB2B321925ACB004FF9C5 /* Quack */ = {
 			isa = PBXGroup;
 			children = (
+				EBB9632F21973586005381CF /* Vision */,
+				EB43B06C219646EB0022A8C9 /* Models */,
 				EB8DB2B421925ACB004FF9C5 /* AppDelegate.swift */,
+				EB43B06A219645F00022A8C9 /* QuackARDelegate.swift */,
+				EBD9F28521A63F2A005954CC /* VisionOutputConverter.swift */,
+				EBF7051B21A0CD1600EE909B /* BoundingBoxView.swift */,
 				EB8DB2B621925ACB004FF9C5 /* Scene.sks */,
 				EB8DB2B821925ACB004FF9C5 /* Scene.swift */,
-				EB8DB2BA21925ACB004FF9C5 /* ViewController.swift */,
+				EB8DB2BA21925ACB004FF9C5 /* QuackViewController.swift */,
 				EB8DB2BC21925ACB004FF9C5 /* Main.storyboard */,
 				EB8DB2BF21925ACF004FF9C5 /* Assets.xcassets */,
 				EB8DB2C121925ACF004FF9C5 /* LaunchScreen.storyboard */,
 				EB8DB2C421925ACF004FF9C5 /* Info.plist */,
 			);
 			path = Quack;
+			sourceTree = "<group>";
+		};
+		EBB9632F21973586005381CF /* Vision */ = {
+			isa = PBXGroup;
+			children = (
+				EB934CA221AF23010009B85B /* TrackedObject.swift */,
+				EBB9632D21973538005381CF /* ObjectTracker.swift */,
+				EB95932C21AB23ED003C735D /* DuckTracker.swift */,
+				EBF7051921A083CE00EE909B /* VisionHelper.swift */,
+			);
+			path = Vision;
+			sourceTree = "<group>";
+		};
+		EBB9633521974149005381CF /* QuackTests */ = {
+			isa = PBXGroup;
+			children = (
+				EBB963472197647D005381CF /* Resources */,
+				EBB9633E2197419E005381CF /* UIImage+TestHelpers.swift */,
+				EBB9633621974149005381CF /* QuackTests.swift */,
+				EBB9633821974149005381CF /* Info.plist */,
+			);
+			path = QuackTests;
+			sourceTree = "<group>";
+		};
+		EBB963472197647D005381CF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EBB963482197647D005381CF /* duck.jpg */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -90,6 +182,24 @@
 			productReference = EB8DB2B121925ACB004FF9C5 /* Quack.app */;
 			productType = "com.apple.product-type.application";
 		};
+		EBB9633321974149005381CF /* QuackTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EBB9633B21974149005381CF /* Build configuration list for PBXNativeTarget "QuackTests" */;
+			buildPhases = (
+				EBB9633021974149005381CF /* Sources */,
+				EBB9633121974149005381CF /* Frameworks */,
+				EBB9633221974149005381CF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EBB9633A21974149005381CF /* PBXTargetDependency */,
+			);
+			name = QuackTests;
+			productName = QuackTests;
+			productReference = EBB9633421974149005381CF /* QuackTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -102,6 +212,10 @@
 				TargetAttributes = {
 					EB8DB2B021925ACB004FF9C5 = {
 						CreatedOnToolsVersion = 10.1;
+					};
+					EBB9633321974149005381CF = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = EB8DB2B021925ACB004FF9C5;
 					};
 				};
 			};
@@ -119,6 +233,7 @@
 			projectRoot = "";
 			targets = (
 				EB8DB2B021925ACB004FF9C5 /* Quack */,
+				EBB9633321974149005381CF /* QuackTests */,
 			);
 		};
 /* End PBXProject section */
@@ -135,6 +250,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EBB9633221974149005381CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBB963492197647D005381CF /* duck.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -142,13 +265,40 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB8DB2BB21925ACB004FF9C5 /* ViewController.swift in Sources */,
+				EB8DB2BB21925ACB004FF9C5 /* QuackViewController.swift in Sources */,
+				EBF7051C21A0CD1600EE909B /* BoundingBoxView.swift in Sources */,
 				EB8DB2B921925ACB004FF9C5 /* Scene.swift in Sources */,
+				EB934CA321AF23010009B85B /* TrackedObject.swift in Sources */,
+				EBF7051A21A083CE00EE909B /* VisionHelper.swift in Sources */,
+				EB43B06E219647260022A8C9 /* Duck.mlmodel in Sources */,
+				EB43B06B219645F00022A8C9 /* QuackARDelegate.swift in Sources */,
+				EB3AD461219DEE4000B55169 /* cat.mlmodel in Sources */,
+				EBD9F28621A63F2A005954CC /* VisionOutputConverter.swift in Sources */,
+				EBB9632E21973538005381CF /* ObjectTracker.swift in Sources */,
 				EB8DB2B521925ACB004FF9C5 /* AppDelegate.swift in Sources */,
+				EB95932D21AB23ED003C735D /* DuckTracker.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EBB9633021974149005381CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBB9633721974149005381CF /* QuackTests.swift in Sources */,
+				EBB96341219760BA005381CF /* Duck.mlmodel in Sources */,
+				EBB9633F2197419E005381CF /* UIImage+TestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EBB9633A21974149005381CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EB8DB2B021925ACB004FF9C5 /* Quack */;
+			targetProxy = EBB9633921974149005381CF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		EB8DB2BC21925ACB004FF9C5 /* Main.storyboard */ = {
@@ -291,7 +441,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 93MK78K358;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Quack/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -300,7 +450,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hecticant.Quack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -309,7 +459,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 93MK78K358;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Quack/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -318,7 +468,47 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hecticant.Quack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		EBB9633C21974149005381CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 93MK78K358;
+				INFOPLIST_FILE = QuackTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hecticant.QuackTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quack.app/Quack";
+			};
+			name = Debug;
+		};
+		EBB9633D21974149005381CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 93MK78K358;
+				INFOPLIST_FILE = QuackTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hecticant.QuackTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quack.app/Quack";
 			};
 			name = Release;
 		};
@@ -339,6 +529,15 @@
 			buildConfigurations = (
 				EB8DB2C821925ACF004FF9C5 /* Debug */,
 				EB8DB2C921925ACF004FF9C5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EBB9633B21974149005381CF /* Build configuration list for PBXNativeTarget "QuackTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EBB9633C21974149005381CF /* Debug */,
+				EBB9633D21974149005381CF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
