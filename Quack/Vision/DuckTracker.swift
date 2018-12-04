@@ -21,6 +21,7 @@ public class DuckTracker: ObjectTracker, VisionHelper {
     
     private var trackedObjects = [TrackedObject]()
     private(set) var tracking = false
+    private let minConfidence = Float(0.25)
     private let maxAge = 100
 
     required public init(withModel model: MLModel, dataSource: ObjectTrackerDataSource, delegate: ObjectTrackerDelegate) {
@@ -63,7 +64,7 @@ public class DuckTracker: ObjectTracker, VisionHelper {
             
             let vnModel = try VNCoreMLModel(for: model)
             let request = VNCoreMLRequest(model: vnModel)
-            request.imageCropAndScaleOption = .scaleFill
+            request.imageCropAndScaleOption = .centerCrop
             return request
         } catch {
             os_log("Failed to load Vision ML model: %{public}@", log:visionLog, type: .error, error.localizedDescription)
@@ -85,25 +86,32 @@ public class DuckTracker: ObjectTracker, VisionHelper {
     }
     
     private func updateTracked(_ observations: [VNRecognizedObjectObservation]) {
-        var unprocessedObservations = observations.sorted { $0.confidence > $1.confidence }
-
-        // Check for objects that intersect existing objects. An object with an
-        // IoU > 0.5 with previous prediction is considered the "same object".
+        // One frame older...
         for index in trackedObjects.indices {
             trackedObjects[index].age += 1
             trackedObjects[index].staleness += 1
-            
-            let max = findMax(in: unprocessedObservations, tracking: trackedObjects[index])
-            if max.iou > self.iouThreshold {
-                trackedObjects[index].observation = unprocessedObservations.remove(at: max.index)
-                trackedObjects[index].staleness = 0
-            }
-            
-            logObservation(trackedObjects[index].observation, prefix: "Updating")
-            os_log("Max IoU is %f", log:self.visionLog, type: .debug, max.iou)
         }
         
-        // Add objects that do not intersect with existing objects.
+        // Ignore observations below the defined confidence threshold.
+        var unprocessedObservations = observations.filter { $0.confidence > minConfidence }
+        
+        // The naïve version: calculate the distance between centroids to find the observations
+        // that track existing objects.
+        var distances = unprocessedObservations.map { observation in
+            trackedObjects.map { $0.observation.boundingBox.distance(to: observation.boundingBox) }
+        }
+        while distances.count > 0 {
+            let (minRow, minCol, min) = distances.removeMinRow()!
+            let observation = unprocessedObservations.remove(at: minRow)
+            if min < 1.0 {
+                trackedObjects[minCol].observation = observation
+                trackedObjects[minCol].staleness = 0
+            } else {
+                unprocessedObservations.append(observation)
+            }
+        }
+            
+        // Start tracking observations that do not intersect with existing objects.
         unprocessedObservations.forEach {
             let trackedObservation = TrackedObject(observation: $0)
             trackedObjects.append(trackedObservation)
@@ -114,23 +122,6 @@ public class DuckTracker: ObjectTracker, VisionHelper {
         trackedObjects = filtered
     }
     
-    private func findMax(in observations: [VNRecognizedObjectObservation], tracking: TrackedObject) -> (iou: Float, index: Int) {
-        let referenceBoundingBox = tracking.observation.boundingBox
-        var index = -1
-        
-        let max = observations.reduce(into: (iou: Float(-1), index: -1)) { result, object in
-            index += 1
-            let iou = DuckTracker.intersectionOverUnion(object.boundingBox, referenceBoundingBox, converter: dataSource?.outputConverter)
-            if iou > result.iou {
-                result.iou = iou
-                result.index = index
-            }
-        }
-
-        return max
-    }
-
-
     private func logObservation(_ observation: VNRecognizedObjectObservation, prefix: String = "") {
         os_log("%@ %{public}@: %{public}@, %f, (%.2f, %.2f, %.2f, %.2f)", log:visionLog, type: .debug,
                prefix,
@@ -144,15 +135,31 @@ public class DuckTracker: ObjectTracker, VisionHelper {
     }
 }
 
-extension ObjectTracker {
-    var iouThreshold: Float {
-        set {
-            let clampedValue = min(max(newValue, 0.1), 0.9)
-            UserDefaults.standard.set(clampedValue, forKey: "com.hecticant.quack.iouThreshold")
+extension CGRect {
+    func distance(to rect: CGRect) -> Float {
+        return Float(hypot(rect.midX - midX, rect.midY - midY))
+    }
+}
+
+public extension Array where Element == [Float] {
+    mutating func removeMinRow() -> (Int,Int,Float)? {
+        guard count > 0 else { return nil }
+        
+        var min = Float(1.0)
+        var minCol = 0
+        var minRow = 0
+
+        for i in 0..<count {
+            for j in 0..<self[i].count {
+                if self[i][j] < min {
+                    min = self[i][j]
+                    minCol = j
+                    minRow = i
+                }
+            }
         }
-        get {
-            let value = UserDefaults.standard.float(forKey: "com.hecticant.quack.iouThreshold")
-            return value == 0 ? 0.5 : value
-        }
+        
+        self.remove(at: minRow)
+        return (minRow, minCol, min)
     }
 }

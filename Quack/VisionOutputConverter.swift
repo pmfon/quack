@@ -32,10 +32,12 @@ public class AugmentedSceneViewportConverter: VisionOutputConverter {
     
     public func convertRect(from visionOutputRect: CGRect) -> CGRect {
         let size = cachedSize
-        let transform = CGAffineTransform.identity
-            .translatedBy(x: 0, y: size.height)
-            .scaledBy(x: size.width, y: -size.height)
         
-        return visionOutputRect.applying(transform)
+        let transform = CGAffineTransform.identity
+            .translatedBy(x: 0, y: size.width)
+            .scaledBy(x: size.width, y: -size.width)
+        
+        let centerCrop = visionOutputRect.applying(transform).offsetBy(dx: 0, dy: (size.height - size.width) * 0.5)
+        return centerCrop
     }
 }

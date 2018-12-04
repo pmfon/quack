@@ -18,9 +18,10 @@ class QuackARDelegate : NSObject, ARSessionDelegate, ARSKViewDelegate, ObjectTra
     private weak var sceneView: ARSKView!
     private var boundingBoxes = [UUID: BoundingBoxView]()
     private var anchors = [UUID: [ARAnchor]]()
+    private var reverseAnchors = [UUID: UUID]()
     private var duckTracker: ObjectTracker!
 
-    private(set) var outputConverter: VisionOutputConverter
+    private var outputConverter: VisionOutputConverter
     private(set) var nextFrame: CVPixelBuffer? = nil
     
 
@@ -96,8 +97,14 @@ class QuackARDelegate : NSObject, ARSessionDelegate, ARSKViewDelegate, ObjectTra
         let toRemove = anchors.filter { key,_ in
             !observations.contains(where: { $0.trackingUUID == key})
         }
-        toRemove.values.flatMap { $0 } .forEach { sceneView.session.remove(anchor: $0) }
-        toRemove.keys.forEach { anchors.removeValue(forKey: $0 )}
+
+        toRemove.values.flatMap { $0 } .forEach {
+            sceneView.session.remove(anchor: $0)
+            reverseAnchors.removeValue(forKey: $0.identifier)
+        }
+        toRemove.keys.forEach {
+            anchors.removeValue(forKey: $0 )
+        }
     }
     
     private func addNewAnchors(for observations: [TrackedObject]) {
@@ -105,11 +112,18 @@ class QuackARDelegate : NSObject, ARSessionDelegate, ARSKViewDelegate, ObjectTra
             guard let anchor = anchor(for: trackedObject.observation) else { continue }
             
             let uuid = trackedObject.trackingUUID
-            if var anchorList = anchors[uuid] {
+            if var anchorList = anchors[uuid],
+                let prev = anchorList.last,
+                simd_almost_equal_elements(anchor.transform, prev.transform, 0.1) {
                 anchorList.append(anchor)
                 anchors[uuid] = anchorList
             } else {
                 anchors[uuid] = [anchor]
+            }
+            
+            if anchors[uuid]?.last == anchor {
+                reverseAnchors[anchor.identifier] = trackedObject.trackingUUID
+                sceneView.session.add(anchor: anchor)
             }
         }
     }
@@ -125,7 +139,7 @@ class QuackARDelegate : NSObject, ARSessionDelegate, ARSKViewDelegate, ObjectTra
         }
 
         if let transform = hitTestResult?.worldTransform {
-            return ARAnchor(transform: transform)
+            return ARAnchor(name:"Waypoint", transform: transform)
         }
         return nil
     }
@@ -179,11 +193,18 @@ class QuackARDelegate : NSObject, ARSessionDelegate, ARSKViewDelegate, ObjectTra
     // MARK: ARSKViewDelegate
     
     func view(_ view: ARSKView, nodeFor anchor: ARAnchor) -> SKNode? {
+        // TODO: draw waypoints.
+        return nil
+        /*
+        guard anchor.name == "Waypoint" else { return nil }
         
-        // TODO SKShapeNode
-        let labelNode = SKLabelNode(text: "Quack!")
-        labelNode.horizontalAlignmentMode = .center
-        labelNode.verticalAlignmentMode = .center
-        return labelNode;
+        let node = SKShapeNode(circleOfRadius: 1.0)
+        if let objectId = reverseAnchors[anchor.identifier],
+            let boundingBox = boundingBoxes[objectId] {
+            node.strokeColor = boundingBox.strokeColor
+        }
+
+        return node
+        */
     }
 }

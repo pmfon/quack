@@ -14,7 +14,6 @@ class QuackViewController: UIViewController {
     
     @IBOutlet var sceneView: ARSKView!
     @IBOutlet var toggleSession: UIButton!
-    @IBOutlet var trackingIoUSetting: UISlider!
     private var arDelegate: QuackARDelegate?
     private var duckTracker: DuckTracker?
     
@@ -57,20 +56,7 @@ class QuackViewController: UIViewController {
         arDelegate?.stopTracking()
         toggleSession.isSelected = false
     }
-    
-    @IBAction func didTapSettingsArea(_ sender: UIGestureRecognizer) {
-        if let value = duckTracker?.iouThreshold, trackingIoUSetting.isHidden {
-            trackingIoUSetting.value = value
-            trackingIoUSetting.isHidden = false
-        } else {
-            trackingIoUSetting.isHidden = true
-        }
-    }
-    
-    @IBAction func valueChanged(slider: UISlider) {
-        duckTracker?.iouThreshold = slider.value
-    }
-    
+
     @IBAction func didToggleSession(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         if sender.isSelected {

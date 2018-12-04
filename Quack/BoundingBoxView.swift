@@ -13,7 +13,7 @@ class BoundingBoxView: UIView {
     
     private weak var confidenceLabel: UILabel?
     private let converter: VisionOutputConverter
-    private let strokeColor: UIColor
+    let strokeColor: UIColor
 
     var observation: VNDetectedObjectObservation {
         didSet {

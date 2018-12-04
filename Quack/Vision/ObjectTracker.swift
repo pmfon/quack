@@ -19,7 +19,6 @@ public protocol ObjectTrackerDelegate: class {
 }
 
 public protocol ObjectTrackerDataSource: class {
-    var outputConverter: VisionOutputConverter { get }
     var nextFrame: CVPixelBuffer? { get }
 }
 

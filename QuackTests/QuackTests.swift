@@ -34,12 +34,9 @@ class TestDelegate: ObjectTrackerDelegate {
 
 class TestDataSource: ObjectTrackerDataSource {
 
-    var outputConverter: VisionOutputConverter
     var nextFrame: CVPixelBuffer?
     
     init() {
-        let view = ARSKView(frame: CGRect(x:0, y:0, width:100, height:200))
-        outputConverter = AugmentedSceneViewportConverter(view: view)
         nextFrame = self.loadImageToPixelBuffer()
     }
     
@@ -87,20 +84,35 @@ class QuackTests: XCTestCase {
         let view = ARSKView(frame: CGRect(x:0, y:0, width:100, height:200))
         let converter = AugmentedSceneViewportConverter(view: view)
         
-        // Vision coordinates are normalized with lower-left origin.
+        // Vision coordinates are normalized, with lower-left origin. The Vision request input is centerCropped.
         let boundingBox1 = CGRect(x: 0.5, y: 0.5, width: 0.5, height: 0.5)
         let viewportRect1 = converter.convertRect(from: boundingBox1)
-        let expected1 = CGRect(x: 50, y: 0, width: 50, height: 100)
+        let expected1 = CGRect(x: 50, y: 50, width: 50, height: 50)
         XCTAssert(viewportRect1 == expected1, "Failed conversion from \(String(describing:boundingBox1))")
        
         let boundingBox2 = CGRect(x: 0, y: 0, width: 0.5, height: 0.5)
         let viewportRect2 = converter.convertRect(from: boundingBox2)
-        let expected2 = CGRect(x: 0, y: 100, width: 50, height: 100)
+        let expected2 = CGRect(x: 0, y: 100, width: 50, height: 50)
         XCTAssert(viewportRect2 == expected2, "Failed conversion from \(String(describing:boundingBox2))")
         
         let boundingBox3 = CGRect(x: 0, y: 0, width: 1.0, height: 1.0)
         let viewportRect3 = converter.convertRect(from: boundingBox3)
-        let expected3 = CGRect(x: 0, y: 0, width: 100, height: 200)
+        let expected3 = CGRect(x: 0, y: 50, width: 100, height: 100)
         XCTAssert(viewportRect3 == expected3, "Failed conversion from \(String(describing:boundingBox3))")
+    }
+    
+    func testArrayHelpers() {
+        var matrix: [[Float]] = [[0.9, 0.2, 0.3], [0.9, 0.5, 0.8], [0.7, 0.4, 0.1]]
+        let min0 = matrix.removeMinRow()!
+        XCTAssert(min0 == (2, 2, 0.1))
+        XCTAssert(matrix.flatMap { $0 }.min()! > 0.1 )
+        
+        let min1 = matrix.removeMinRow()!
+        XCTAssert(min1 == (0, 1, 0.2))
+        XCTAssert(matrix.count == 1)
+        
+        let _ = matrix.removeMinRow()!
+        XCTAssert(matrix.count == 0)
+        XCTAssert(matrix.removeMinRow() == nil)
     }
 }
