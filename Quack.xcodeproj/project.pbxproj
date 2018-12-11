@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB125EBC21BD7F6B00CBBD48 /* VideoOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB125EBB21BD7F6B00CBBD48 /* VideoOutputView.swift */; };
 		EB3AD461219DEE4000B55169 /* cat.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = EB3AD460219DEE4000B55169 /* cat.mlmodel */; };
 		EB43B06B219645F00022A8C9 /* QuackARDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB43B06A219645F00022A8C9 /* QuackARDelegate.swift */; };
 		EB43B06E219647260022A8C9 /* Duck.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = EB43B06D219647260022A8C9 /* Duck.mlmodel */; };
+		EB5F74DF21BC7B4C00E6F9C9 /* IMG_0299.mov in Resources */ = {isa = PBXBuildFile; fileRef = EB5F74DE21BC7B4C00E6F9C9 /* IMG_0299.mov */; };
+		EB5F74E021BC7B4C00E6F9C9 /* IMG_0299.mov in Resources */ = {isa = PBXBuildFile; fileRef = EB5F74DE21BC7B4C00E6F9C9 /* IMG_0299.mov */; };
+		EB5F74E821BC833600E6F9C9 /* VideoCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5F74E721BC833600E6F9C9 /* VideoCapture.swift */; };
+		EB5F74EA21BC834400E6F9C9 /* VideoReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5F74E921BC834400E6F9C9 /* VideoReader.swift */; };
+		EB5F74EC21BC8A5C00E6F9C9 /* VideoOutputProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5F74EB21BC8A5C00E6F9C9 /* VideoOutputProvider.swift */; };
 		EB8DB2B521925ACB004FF9C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8DB2B421925ACB004FF9C5 /* AppDelegate.swift */; };
-		EB8DB2B721925ACB004FF9C5 /* Scene.sks in Resources */ = {isa = PBXBuildFile; fileRef = EB8DB2B621925ACB004FF9C5 /* Scene.sks */; };
-		EB8DB2B921925ACB004FF9C5 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8DB2B821925ACB004FF9C5 /* Scene.swift */; };
 		EB8DB2BB21925ACB004FF9C5 /* QuackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8DB2BA21925ACB004FF9C5 /* QuackViewController.swift */; };
 		EB8DB2BE21925ACB004FF9C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB8DB2BC21925ACB004FF9C5 /* Main.storyboard */; };
 		EB8DB2C021925ACF004FF9C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB8DB2BF21925ACF004FF9C5 /* Assets.xcassets */; };
@@ -40,13 +44,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB125EBB21BD7F6B00CBBD48 /* VideoOutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoOutputView.swift; sourceTree = "<group>"; };
 		EB3AD460219DEE4000B55169 /* cat.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = cat.mlmodel; sourceTree = "<group>"; };
 		EB43B06A219645F00022A8C9 /* QuackARDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuackARDelegate.swift; sourceTree = "<group>"; };
 		EB43B06D219647260022A8C9 /* Duck.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Duck.mlmodel; sourceTree = "<group>"; };
+		EB5F74DE21BC7B4C00E6F9C9 /* IMG_0299.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = IMG_0299.mov; sourceTree = "<group>"; };
+		EB5F74E721BC833600E6F9C9 /* VideoCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCapture.swift; sourceTree = "<group>"; };
+		EB5F74E921BC834400E6F9C9 /* VideoReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoReader.swift; sourceTree = "<group>"; };
+		EB5F74EB21BC8A5C00E6F9C9 /* VideoOutputProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoOutputProvider.swift; sourceTree = "<group>"; };
 		EB8DB2B121925ACB004FF9C5 /* Quack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB8DB2B421925ACB004FF9C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EB8DB2B621925ACB004FF9C5 /* Scene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Scene.sks; sourceTree = "<group>"; };
-		EB8DB2B821925ACB004FF9C5 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		EB8DB2BA21925ACB004FF9C5 /* QuackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuackViewController.swift; sourceTree = "<group>"; };
 		EB8DB2BD21925ACB004FF9C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EB8DB2BF21925ACF004FF9C5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -93,6 +100,17 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		EB5F74E421BC80C200E6F9C9 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				EB125EBB21BD7F6B00CBBD48 /* VideoOutputView.swift */,
+				EB5F74E721BC833600E6F9C9 /* VideoCapture.swift */,
+				EB5F74E921BC834400E6F9C9 /* VideoReader.swift */,
+				EB5F74EB21BC8A5C00E6F9C9 /* VideoOutputProvider.swift */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
 		EB8DB2A821925ACB004FF9C5 = {
 			isa = PBXGroup;
 			children = (
@@ -115,14 +133,13 @@
 		EB8DB2B321925ACB004FF9C5 /* Quack */ = {
 			isa = PBXGroup;
 			children = (
+				EB5F74E421BC80C200E6F9C9 /* Video */,
 				EBB9632F21973586005381CF /* Vision */,
 				EB43B06C219646EB0022A8C9 /* Models */,
 				EB8DB2B421925ACB004FF9C5 /* AppDelegate.swift */,
 				EB43B06A219645F00022A8C9 /* QuackARDelegate.swift */,
 				EBD9F28521A63F2A005954CC /* VisionOutputConverter.swift */,
 				EBF7051B21A0CD1600EE909B /* BoundingBoxView.swift */,
-				EB8DB2B621925ACB004FF9C5 /* Scene.sks */,
-				EB8DB2B821925ACB004FF9C5 /* Scene.swift */,
 				EB8DB2BA21925ACB004FF9C5 /* QuackViewController.swift */,
 				EB8DB2BC21925ACB004FF9C5 /* Main.storyboard */,
 				EB8DB2BF21925ACF004FF9C5 /* Assets.xcassets */,
@@ -158,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				EBB963482197647D005381CF /* duck.jpg */,
+				EB5F74DE21BC7B4C00E6F9C9 /* IMG_0299.mov */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -243,7 +261,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB8DB2B721925ACB004FF9C5 /* Scene.sks in Resources */,
+				EB5F74DF21BC7B4C00E6F9C9 /* IMG_0299.mov in Resources */,
 				EB8DB2C321925ACF004FF9C5 /* LaunchScreen.storyboard in Resources */,
 				EB8DB2C021925ACF004FF9C5 /* Assets.xcassets in Resources */,
 				EB8DB2BE21925ACB004FF9C5 /* Main.storyboard in Resources */,
@@ -254,6 +272,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB5F74E021BC7B4C00E6F9C9 /* IMG_0299.mov in Resources */,
 				EBB963492197647D005381CF /* duck.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,11 +285,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB8DB2BB21925ACB004FF9C5 /* QuackViewController.swift in Sources */,
+				EB125EBC21BD7F6B00CBBD48 /* VideoOutputView.swift in Sources */,
+				EB5F74EA21BC834400E6F9C9 /* VideoReader.swift in Sources */,
 				EBF7051C21A0CD1600EE909B /* BoundingBoxView.swift in Sources */,
-				EB8DB2B921925ACB004FF9C5 /* Scene.swift in Sources */,
 				EB934CA321AF23010009B85B /* TrackedObject.swift in Sources */,
+				EB5F74E821BC833600E6F9C9 /* VideoCapture.swift in Sources */,
 				EBF7051A21A083CE00EE909B /* VisionHelper.swift in Sources */,
 				EB43B06E219647260022A8C9 /* Duck.mlmodel in Sources */,
+				EB5F74EC21BC8A5C00E6F9C9 /* VideoOutputProvider.swift in Sources */,
 				EB43B06B219645F00022A8C9 /* QuackARDelegate.swift in Sources */,
 				EB3AD461219DEE4000B55169 /* cat.mlmodel in Sources */,
 				EBD9F28621A63F2A005954CC /* VisionOutputConverter.swift in Sources */,
@@ -441,7 +463,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 93MK78K358;
 				INFOPLIST_FILE = Quack/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -459,7 +481,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 93MK78K358;
 				INFOPLIST_FILE = Quack/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

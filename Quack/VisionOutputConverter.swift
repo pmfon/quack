@@ -13,15 +13,17 @@ public protocol VisionOutputConverter {
     func convertRect(from visionOutputRect: CGRect) -> CGRect
 }
 
-public class AugmentedSceneViewportConverter: VisionOutputConverter {
+class VideoLayerViewportConverter<T:CALayer>: VisionOutputConverter {
     
-    private weak var view: ARSKView!
+    private weak var view: OutputView<T>!
     private var cachedSize: CGSize
+    private var outputProvider: VideoOutputProvider
     private var observation: NSKeyValueObservation?
     
-    public init(view: ARSKView) {
+    init(view: OutputView<T>, outputProvider: VideoOutputProvider) {
         self.view = view
-        cachedSize = view.bounds.size
+        self.outputProvider = outputProvider
+        self.cachedSize = view.bounds.size
         
         observation = view.observe(\.bounds, options: [.new]) { object, change in
             if let size = change.newValue?.size {
@@ -32,12 +34,13 @@ public class AugmentedSceneViewportConverter: VisionOutputConverter {
     
     public func convertRect(from visionOutputRect: CGRect) -> CGRect {
         let size = cachedSize
-        
+
+        // Convert to viewport coordinates. Assumes the Vision request was not cropped.
         let transform = CGAffineTransform.identity
-            .translatedBy(x: 0, y: size.width)
-            .scaledBy(x: size.width, y: -size.width)
+            .translatedBy(x: 0, y: size.height)
+            .scaledBy(x: size.width, y: -size.height)
         
-        let centerCrop = visionOutputRect.applying(transform).offsetBy(dx: 0, dy: (size.height - size.width) * 0.5)
-        return centerCrop
+        let outputRect = visionOutputRect.applying(transform)
+        return outputRect
     }
 }

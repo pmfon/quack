@@ -7,32 +7,57 @@
 //
 
 import UIKit
-import SpriteKit
-import ARKit
+import AVFoundation
 
-class QuackViewController: UIViewController {
+class QuackViewController: UIViewController, ObjectTrackerDataSource {
+    #if DEBUG
+    private typealias ViewType = VideoPlaybackView
+    #else
+    private typealias ViewType = VideoCaptureView
+    #endif
     
-    @IBOutlet var sceneView: ARSKView!
+    @IBOutlet var previewViewContainer: UIView!
     @IBOutlet var toggleSession: UIButton!
+    
+    private var previewView: ViewType!
     private var arDelegate: QuackARDelegate?
-    private var duckTracker: DuckTracker?
+    private var outputProvider: VideoOutputProvider!
+    
+
+    var nextFrame: CVPixelBuffer? {
+        return outputProvider.nextFrame()
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addPreviewView()
         configureAndPresentScene()
     }
     
-    private func configureAndPresentScene() {
-        guard let scene = SKScene(fileNamed: "Scene") else { return }
-
-        arDelegate = QuackARDelegate(with: sceneView) { dataSource, delegate in
-            let duckTracker = DuckTracker(withModel: Duck().model, dataSource: dataSource, delegate: delegate)
-            self.duckTracker = duckTracker
-            return duckTracker
-        }
-        sceneView.presentScene(scene)
+    private func addPreviewView() {
+        previewView = ViewType()
+        previewViewContainer.addSubview(previewView)
+        previewView.fitToSuperview()
     }
     
+    private func configureAndPresentScene() {
+        
+        let asset = AVAsset(url: Bundle.main.url(forResource: "IMG_0299", withExtension: "mov")!)
+        outputProvider = BuildVideoOutputProvider(view: previewView, options: VideoOutputProviderOptions(asset: asset))
+
+        let outputConverter = VideoLayerViewportConverter(view: previewView, outputProvider: outputProvider)
+        arDelegate = QuackARDelegate(with: previewView, outputConverter: outputConverter) { delegate in
+            let duckTracker = DuckTracker(withModel: Duck().model, dataSource: self, delegate: delegate)
+            return duckTracker
+        }
+    }
+
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         startSession()
@@ -44,15 +69,11 @@ class QuackViewController: UIViewController {
     }
     
     private func startSession() {
-        let configuration = ARWorldTrackingConfiguration()
-        configuration.worldAlignment = .gravityAndHeading
-        
-        sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+        arDelegate?.startTrackingIfNeeded()
         toggleSession.isSelected = true
     }
     
     private func stopSession() {
-        sceneView.session.pause()
         arDelegate?.stopTracking()
         toggleSession.isSelected = false
     }
@@ -64,5 +85,17 @@ class QuackViewController: UIViewController {
         } else {
             stopSession()
         }
+    }
+}
+
+extension UIView {
+    
+    fileprivate func fitToSuperview() {
+        guard let superview = superview else { return }
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.topAnchor.constraint(equalTo: superview.topAnchor).isActive = true
+        self.bottomAnchor.constraint(equalTo: superview.bottomAnchor).isActive = true
+        self.leadingAnchor.constraint(equalTo: superview.leadingAnchor).isActive = true
+        self.trailingAnchor.constraint(equalTo: superview.trailingAnchor).isActive = true
     }
 }

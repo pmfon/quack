@@ -23,6 +23,7 @@ class BoundingBoxView: UIView {
     
     private func update(with observation: VNDetectedObjectObservation) {
         frame = converter.convertRect(from: observation.boundingBox)
+        confidenceLabel?.text = String(format: "%.2f", observation.confidence)
         setNeedsDisplay()
     }
     
@@ -43,21 +44,20 @@ class BoundingBoxView: UIView {
     }
     
     private func setupConfidenceLabel() {
-        let label = UILabel(frame: .zero)
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 20))
         label.font = UIFont.preferredFont(forTextStyle: .caption1)
         label.backgroundColor = strokeColor.withAlphaComponent(0.5)
         label.textColor = .white
-        label.text = String(format: "%.2f", observation.confidence)
+        label.textAlignment = .center
         
         addSubview(label)
         confidenceLabel = label
-        confidenceLabel?.sizeToFit()
     }
     
 
     override func draw(_ rect: CGRect) {
         let path = UIBezierPath(rect: self.bounds)
-        path.lineWidth = 2.0
+        path.lineWidth = 3.0
         
         if observation.confidence < 0.5 {
             let  dashes: [CGFloat] = [4.0, 4.0]

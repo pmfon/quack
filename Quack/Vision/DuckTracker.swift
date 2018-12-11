@@ -16,13 +16,13 @@ public class DuckTracker: ObjectTracker, VisionHelper {
     private let duckTrackingQueue = DispatchQueue(label: "com.hecticant.quack.duckTracker", qos: .userInteractive)
     
     private let model: MLModel
-    private weak var delegate: ObjectTrackerDelegate?
-    private weak var dataSource: ObjectTrackerDataSource?
+    private weak var delegate: ObjectTrackerDelegate!
+    private weak var dataSource: ObjectTrackerDataSource!
     
     private var trackedObjects = [TrackedObject]()
     private(set) var tracking = false
     private let minConfidence = Float(0.25)
-    private let maxAge = 100
+    private let maxAge = 30
 
     required public init(withModel model: MLModel, dataSource: ObjectTrackerDataSource, delegate: ObjectTrackerDelegate) {
         self.model = model
@@ -42,7 +42,7 @@ public class DuckTracker: ObjectTracker, VisionHelper {
         duckTrackingQueue.async {
             let requestHandler = VNSequenceRequestHandler()
             while self.tracking,
-                let input = self.dataSource?.nextFrame {
+                let input = self.dataSource.nextFrame {
                     do {
                         try requestHandler.perform([self.featureValueRequest], on: input, orientation: self.imageOrientation)
                         if let results = self.featureValueRequest.results as? [VNRecognizedObjectObservation] {
@@ -64,7 +64,7 @@ public class DuckTracker: ObjectTracker, VisionHelper {
             
             let vnModel = try VNCoreMLModel(for: model)
             let request = VNCoreMLRequest(model: vnModel)
-            request.imageCropAndScaleOption = .centerCrop
+            request.imageCropAndScaleOption = .scaleFill
             return request
         } catch {
             os_log("Failed to load Vision ML model: %{public}@", log:visionLog, type: .error, error.localizedDescription)
