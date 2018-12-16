@@ -1,5 +1,5 @@
 //
-//  QuackARDelegate.swift
+//  DuckProcessor.swift
 //  Quack
 //
 //  Created by Pedro Fonseca on 09/11/2018.
@@ -11,24 +11,23 @@ import UIKit
 import ARKit
 import Vision
 
-class QuackARDelegate : NSObject, ObjectTrackerDelegate {
+class DuckProcessor : NSObject {
 
-    typealias TrackerInit = (ObjectTrackerDelegate) -> (ObjectTracker)
     private let sceneLog = OSLog(subsystem: "com.hecticant.quack.scene", category: "Scene")
     private weak var trackedView: UIView!
     private var boundingBoxes = [UUID: BoundingBoxView]()
     private var anchors = [UUID: [ARAnchor]]()
     private var reverseAnchors = [UUID: UUID]()
-    private var duckTracker: ObjectTracker!
+    private(set) var duckTracker: ObjectTracker!
 
     private var outputConverter: VisionOutputConverter
     
 
-    init(with trackedView: UIView, outputConverter: VisionOutputConverter, tracker: TrackerInit) {
+    init(with trackedView: UIView, outputConverter: VisionOutputConverter, duckTracker: DuckTracker) {
         self.trackedView = trackedView
         self.outputConverter = outputConverter
+        self.duckTracker = duckTracker
         super.init()
-        duckTracker = tracker(self)
     }
 
     func startTrackingIfNeeded() {
@@ -41,20 +40,9 @@ class QuackARDelegate : NSObject, ObjectTrackerDelegate {
         duckTracker.stop()
         removeBoundingBoxesNotTracked(by: [TrackedObject]())
     }
-    
 
-    func didPredict(result: ObjectTrackerResult) {
-        if !duckTracker.tracking { return }
-        
-        switch result {
-        case .success(let observations):
-            updateTrackedObjects(for: observations)
-        case .error(_):
-            break;
-        }
-    }
-
-    private func updateTrackedObjects(for observations: [TrackedObject]) {
+    func updateTrackedObjects(for observations: [TrackedObject]) {
+        guard duckTracker.tracking else { return }
         DispatchQueue.main.async {
             self.updateBoundingBoxes(for: observations)
         }
@@ -82,17 +70,6 @@ class QuackARDelegate : NSObject, ObjectTrackerDelegate {
         deadBoxes.forEach {
             boundingBoxes.removeValue(forKey: $0.0)
             $0.1.removeFromSuperview()
-        }
-    }
-   
-    private func stopTrackingAndPresentError(_ error: Error) {
-        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Restart", style: .default, handler: { (action) in
-            self.startTrackingIfNeeded()
-        }))
-        
-        if let viewController = self.trackedView.next as? UIViewController {
-            viewController.present(alert, animated: true, completion: nil)
         }
     }
 }

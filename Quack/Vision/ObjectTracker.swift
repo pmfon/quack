@@ -15,10 +15,11 @@ public enum ObjectTrackerResult {
 }
 
 public protocol ObjectTrackerObserver {
-    
+    func didStartTracking()
+    func didStopTracking(error: Error?)
 }
 
-public protocol ObjectTrackerDelegate: class {
+public protocol ObjectTrackerDelegate: class, ObjectTrackerObserver {
     func didPredict(result: ObjectTrackerResult)
 }
 

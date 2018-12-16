@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		EB125EBC21BD7F6B00CBBD48 /* VideoOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB125EBB21BD7F6B00CBBD48 /* VideoOutputView.swift */; };
 		EB3AD461219DEE4000B55169 /* cat.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = EB3AD460219DEE4000B55169 /* cat.mlmodel */; };
-		EB43B06B219645F00022A8C9 /* QuackARDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB43B06A219645F00022A8C9 /* QuackARDelegate.swift */; };
+		EB43B06B219645F00022A8C9 /* DuckProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB43B06A219645F00022A8C9 /* DuckProcessor.swift */; };
 		EB43B06E219647260022A8C9 /* Duck.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = EB43B06D219647260022A8C9 /* Duck.mlmodel */; };
 		EB5F74DF21BC7B4C00E6F9C9 /* IMG_0299.mov in Resources */ = {isa = PBXBuildFile; fileRef = EB5F74DE21BC7B4C00E6F9C9 /* IMG_0299.mov */; };
 		EB5F74E021BC7B4C00E6F9C9 /* IMG_0299.mov in Resources */ = {isa = PBXBuildFile; fileRef = EB5F74DE21BC7B4C00E6F9C9 /* IMG_0299.mov */; };
@@ -46,7 +46,7 @@
 /* Begin PBXFileReference section */
 		EB125EBB21BD7F6B00CBBD48 /* VideoOutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoOutputView.swift; sourceTree = "<group>"; };
 		EB3AD460219DEE4000B55169 /* cat.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = cat.mlmodel; sourceTree = "<group>"; };
-		EB43B06A219645F00022A8C9 /* QuackARDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuackARDelegate.swift; sourceTree = "<group>"; };
+		EB43B06A219645F00022A8C9 /* DuckProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckProcessor.swift; sourceTree = "<group>"; };
 		EB43B06D219647260022A8C9 /* Duck.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Duck.mlmodel; sourceTree = "<group>"; };
 		EB5F74DE21BC7B4C00E6F9C9 /* IMG_0299.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = IMG_0299.mov; sourceTree = "<group>"; };
 		EB5F74E721BC833600E6F9C9 /* VideoCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCapture.swift; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 				EBB9632F21973586005381CF /* Vision */,
 				EB43B06C219646EB0022A8C9 /* Models */,
 				EB8DB2B421925ACB004FF9C5 /* AppDelegate.swift */,
-				EB43B06A219645F00022A8C9 /* QuackARDelegate.swift */,
+				EB43B06A219645F00022A8C9 /* DuckProcessor.swift */,
 				EBD9F28521A63F2A005954CC /* VisionOutputConverter.swift */,
 				EBF7051B21A0CD1600EE909B /* BoundingBoxView.swift */,
 				EB8DB2BA21925ACB004FF9C5 /* QuackViewController.swift */,
@@ -293,7 +293,7 @@
 				EBF7051A21A083CE00EE909B /* VisionHelper.swift in Sources */,
 				EB43B06E219647260022A8C9 /* Duck.mlmodel in Sources */,
 				EB5F74EC21BC8A5C00E6F9C9 /* VideoOutputProvider.swift in Sources */,
-				EB43B06B219645F00022A8C9 /* QuackARDelegate.swift in Sources */,
+				EB43B06B219645F00022A8C9 /* DuckProcessor.swift in Sources */,
 				EB3AD461219DEE4000B55169 /* cat.mlmodel in Sources */,
 				EBD9F28621A63F2A005954CC /* VisionOutputConverter.swift in Sources */,
 				EBB9632E21973538005381CF /* ObjectTracker.swift in Sources */,

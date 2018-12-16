@@ -20,13 +20,7 @@ public class OutputView<T:CALayer>: UIView, VideoOutputView {
     override public class var layerClass: AnyClass {
         return LayerType.self
     }
-  
-    /*
-    public override func willMove(toSuperview newSuperview: UIView?) {
-        layer.contentsGravity = .resizeAspectFill
-        super.willMove(toSuperview: newSuperview)
-    }
-    */
+
     public var videoLayer: LayerType {
         return layer as! LayerType
     }

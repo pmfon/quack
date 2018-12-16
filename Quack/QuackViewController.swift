@@ -9,8 +9,9 @@
 import UIKit
 import AVFoundation
 
-class QuackViewController: UIViewController, ObjectTrackerDataSource {
-    #if false
+class QuackViewController: UIViewController, ObjectTrackerDataSource, ObjectTrackerDelegate {
+    
+    #if DEBUG_
     private typealias ViewType = VideoPlaybackView
     #else
     private typealias ViewType = VideoCaptureView
@@ -20,16 +21,41 @@ class QuackViewController: UIViewController, ObjectTrackerDataSource {
     @IBOutlet var toggleSession: UIButton!
     
     private var previewView: ViewType!
-    private var arDelegate: QuackARDelegate?
+    private var duckProcessor: DuckProcessor!
     private var outputProvider: VideoOutputProvider!
     
-
+    
+    // MARK: ObjectTrackerDataSource
+    
     var nextFrame: CVPixelBuffer? {
         return outputProvider.nextFrame()
     }
 
     var frameRateInSeconds: Float32 {
         return outputProvider.frameRateInSeconds
+    }
+    
+
+    // MARK: ObjectTrackerDelegate
+    
+    func didPredict(result: ObjectTrackerResult) {
+        switch result {
+        case .success(let observations):
+            duckProcessor.updateTrackedObjects(for: observations)
+        case .error(_):
+            break;
+        }
+    }
+    
+    func didStartTracking() {
+        toggleSession.isSelected = true
+    }
+    
+    func didStopTracking(error: Error?) {
+        toggleSession.isSelected = false
+        if let error = error {
+            presentError(error)
+        }
     }
     
     
@@ -46,15 +72,12 @@ class QuackViewController: UIViewController, ObjectTrackerDataSource {
     }
     
     private func configureAndPresentScene() {
-        
         let asset = AVAsset(url: Bundle.main.url(forResource: "IMG_0299", withExtension: "mov")!)
         outputProvider = BuildVideoOutputProvider(view: previewView, options: VideoOutputProviderOptions(asset: asset))
 
+        let duckTracker = DuckTracker(withModel: cat().model, dataSource: self, delegate: self)
         let outputConverter = VideoLayerViewportConverter(view: previewView, outputProvider: outputProvider)
-        arDelegate = QuackARDelegate(with: previewView, outputConverter: outputConverter) { delegate in
-            let duckTracker = DuckTracker(withModel: cat().model, dataSource: self, delegate: delegate)
-            return duckTracker
-        }
+        duckProcessor = DuckProcessor(with: previewView, outputConverter: outputConverter, duckTracker: duckTracker)
     }
 
     
@@ -73,15 +96,22 @@ class QuackViewController: UIViewController, ObjectTrackerDataSource {
     }
     
     private func startSession() {
-        arDelegate?.startTrackingIfNeeded()
-        toggleSession.isSelected = true
+        duckProcessor?.startTrackingIfNeeded()
     }
     
     private func stopSession() {
-        arDelegate?.stopTracking()
-        toggleSession.isSelected = false
+        duckProcessor?.stopTracking()
     }
 
+    private func presentError(_ error: Error) {
+        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Restart", style: .default, handler: { (action) in
+             self.duckProcessor.startTrackingIfNeeded()
+        }))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
     @IBAction func didToggleSession(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         if sender.isSelected {
