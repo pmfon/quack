@@ -42,6 +42,13 @@
                                             <action selector="didToggleSession:" destination="BV1-FR-VrT" eventType="touchUpInside" id="yqT-V4-Ofu"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SU5-UH-ueJ">
+                                        <rect key="frame" x="8" y="0.0" width="60" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -64,6 +71,7 @@
                         <viewLayoutGuide key="safeArea" id="sIM-JJ-ilU"/>
                     </view>
                     <connections>
+                        <outlet property="fpsLabel" destination="SU5-UH-ueJ" id="9Ei-AR-d4w"/>
                         <outlet property="previewViewContainer" destination="cf1-d5-6G1" id="alt-Cs-nIl"/>
                         <outlet property="toggleSession" destination="7tD-n3-5uU" id="xDv-5J-QlA"/>
                     </connections>

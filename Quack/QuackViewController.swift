@@ -19,6 +19,7 @@ class QuackViewController: UIViewController, ObjectTrackerDataSource, ObjectTrac
     
     @IBOutlet var previewViewContainer: UIView!
     @IBOutlet var toggleSession: UIButton!
+    @IBOutlet var fpsLabel: UILabel!
     
     private var previewView: ViewType!
     private var duckProcessor: DuckProcessor!
@@ -75,7 +76,7 @@ class QuackViewController: UIViewController, ObjectTrackerDataSource, ObjectTrac
         let asset = AVAsset(url: Bundle.main.url(forResource: "IMG_0299", withExtension: "mov")!)
         outputProvider = BuildVideoOutputProvider(view: previewView, options: VideoOutputProviderOptions(asset: asset))
 
-        let duckTracker = DuckTracker(withModel: cat().model, dataSource: self, delegate: self)
+        let duckTracker = DuckTracker(withModel: Duck().model, dataSource: self, delegate: self)
         let outputConverter = VideoLayerViewportConverter(view: previewView, outputProvider: outputProvider)
         duckProcessor = DuckProcessor(with: previewView, outputConverter: outputConverter, duckTracker: duckTracker)
     }
@@ -83,6 +84,10 @@ class QuackViewController: UIViewController, ObjectTrackerDataSource, ObjectTrac
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    override var prefersHomeIndicatorAutoHidden: Bool {
+        return true
     }
 
     override func viewWillAppear(_ animated: Bool) {

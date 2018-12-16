@@ -15,7 +15,9 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Vide
     let captureSession: AVCaptureSession
     private let videoCaptureQueue = DispatchQueue(label: "com.hecticant.quack.videoCapture", qos: .userInteractive)
     
-    var frameRateInSeconds: Float32 = 30
+    var lastTime: CMTime!
+    let clock = CMClockGetHostTimeClock()
+    var frameRateInSeconds: Float32 = 0
     
     init(layer: AVCaptureVideoPreviewLayer) {
         captureSession = AVCaptureSession()
@@ -25,6 +27,8 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Vide
             output.setSampleBufferDelegate(self, queue: videoCaptureQueue)
         }
         layer.session = captureSession
+        
+        lastTime = CMClockGetTime(clock)
         captureSession.startRunning()
     }
     
@@ -70,6 +74,11 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Vide
     }    
     
     func nextFrame() -> CVPixelBuffer? {
+        let currentTime = CMClockGetTime(clock)
+        let difference = CMTimeSubtract(currentTime, lastTime)
+        frameRateInSeconds = Float32(1.0 / CMTimeGetSeconds(difference))
+        lastTime = currentTime
+        
         return _nextFrame
     }
     

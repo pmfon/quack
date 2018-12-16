@@ -20,7 +20,15 @@ public class DuckTracker: ObjectTracker, VisionHelper {
     private weak var dataSource: ObjectTrackerDataSource!
     
     private var trackedObjects = [TrackedObject]()
-    private(set) var tracking = false
+    private(set) var tracking = false {
+        didSet {
+            if tracking {
+                delegate.didStartTracking()
+            } else {
+                delegate.didStopTracking(error: nil)
+            }
+        }
+    }
     private let minConfidence = Float(0.25)
     private let maxAge = 10
 
