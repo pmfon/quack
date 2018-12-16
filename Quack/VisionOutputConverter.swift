@@ -13,14 +13,14 @@ public protocol VisionOutputConverter {
     func convertRect(from visionOutputRect: CGRect) -> CGRect
 }
 
-class VideoLayerViewportConverter<T:CALayer>: VisionOutputConverter {
+public class VideoLayerViewportConverter<T:CALayer>: VisionOutputConverter {
     
     private weak var view: OutputView<T>!
     private var cachedSize: CGSize
     private var outputProvider: VideoOutputProvider
     private var observation: NSKeyValueObservation?
     
-    init(view: OutputView<T>, outputProvider: VideoOutputProvider) {
+    public init(view: OutputView<T>, outputProvider: VideoOutputProvider) {
         self.view = view
         self.outputProvider = outputProvider
         self.cachedSize = view.bounds.size

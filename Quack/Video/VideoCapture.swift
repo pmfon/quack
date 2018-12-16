@@ -47,8 +47,10 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Vide
     }
     
     private func configureAVInput(captureSession: AVCaptureSession) -> AVCaptureDeviceInput? {
-        let videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
-        guard let input = try? AVCaptureDeviceInput(device: videoDevice!), captureSession.canAddInput(input) else { return nil }
+        guard let videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
+            let input = try? AVCaptureDeviceInput(device: videoDevice), captureSession.canAddInput(input) else {
+            return nil
+        }
         captureSession.addInput(input)
         return input
     }

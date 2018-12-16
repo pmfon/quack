@@ -49,13 +49,17 @@ class QuackViewController: UIViewController, ObjectTrackerDataSource, ObjectTrac
     }
     
     func didStartTracking() {
-        toggleSession.isSelected = true
+        DispatchQueue.main.async {
+            self.toggleSession.isSelected = true
+        }
     }
     
     func didStopTracking(error: Error?) {
-        toggleSession.isSelected = false
-        if let error = error {
-            presentError(error)
+        DispatchQueue.main.async {
+            self.toggleSession.isSelected = false
+            if let error = error {
+                self.presentError(error)
+            }
         }
     }
     

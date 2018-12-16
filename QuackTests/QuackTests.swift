@@ -12,7 +12,7 @@ import ARKit
 import Quack
 
 
-class TestDelegate: ObjectTrackerDelegate {
+class ObjectTrackerSpy: ObjectTrackerDelegate {
     
     var expectation: XCTestExpectation
     var objectDetectionResult: [TrackedObject]?
@@ -30,10 +30,13 @@ class TestDelegate: ObjectTrackerDelegate {
         }
         expectation.fulfill()
     }
+    
+    func didStartTracking() { }
+    func didStopTracking(error: Error?) { }
 }
 
-class TestDataSource: ObjectTrackerDataSource {
-
+class MockObjectTrackerDataSource: ObjectTrackerDataSource {
+    var frameRateInSeconds: Float32 = 1
     var nextFrame: CVPixelBuffer?
     
     init() {
@@ -46,6 +49,12 @@ class TestDataSource: ObjectTrackerDataSource {
     }
 }
 
+class MockVideoOutputProvider: VideoOutputProvider {
+    func nextFrame() -> CVPixelBuffer? { return nil }
+    func outputSize() -> CGSize { return .zero }
+    var frameRateInSeconds: Float32 = 1
+}
+
 
 class QuackTests: XCTestCase {
 
@@ -54,8 +63,8 @@ class QuackTests: XCTestCase {
 
     func testPredictDuckWithSuccess() {
         let callbackExpectation = expectation(description: "The ObjectDetectorDelegate is called with the result of a detection request")
-        let testDelegate = TestDelegate(with: callbackExpectation)
-        let testDataSource = TestDataSource()
+        let testDelegate = ObjectTrackerSpy(with: callbackExpectation)
+        let testDataSource = MockObjectTrackerDataSource()
         let objectTracker = DuckTracker(withModel: Duck().model, dataSource:testDataSource, delegate: testDelegate)
         
         objectTracker.start()
@@ -81,23 +90,25 @@ class QuackTests: XCTestCase {
     }
 
     func testConvertVisionToViewportCoordinates() {
-        let view = ARSKView(frame: CGRect(x:0, y:0, width:100, height:200))
-        let converter = AugmentedSceneViewportConverter(view: view)
+        let view = OutputView<CALayer>(frame: CGRect(x:0, y:0, width:100, height:200))
         
-        // Vision coordinates are normalized, with lower-left origin. The Vision request input is centerCropped.
+        let outputProvider = MockVideoOutputProvider()
+        let converter = VideoLayerViewportConverter(view: view, outputProvider: outputProvider)
+        
+        // Vision coordinates are normalized, with lower-left origin. The Vision request input is scaled.
         let boundingBox1 = CGRect(x: 0.5, y: 0.5, width: 0.5, height: 0.5)
         let viewportRect1 = converter.convertRect(from: boundingBox1)
-        let expected1 = CGRect(x: 50, y: 50, width: 50, height: 50)
+        let expected1 = CGRect(x: 50, y: 0, width: 50, height: 100)
         XCTAssert(viewportRect1 == expected1, "Failed conversion from \(String(describing:boundingBox1))")
        
         let boundingBox2 = CGRect(x: 0, y: 0, width: 0.5, height: 0.5)
         let viewportRect2 = converter.convertRect(from: boundingBox2)
-        let expected2 = CGRect(x: 0, y: 100, width: 50, height: 50)
+        let expected2 = CGRect(x: 0, y: 100, width: 50, height: 100)
         XCTAssert(viewportRect2 == expected2, "Failed conversion from \(String(describing:boundingBox2))")
         
         let boundingBox3 = CGRect(x: 0, y: 0, width: 1.0, height: 1.0)
         let viewportRect3 = converter.convertRect(from: boundingBox3)
-        let expected3 = CGRect(x: 0, y: 50, width: 100, height: 100)
+        let expected3 = CGRect(x: 0, y: 0, width: 100, height: 200)
         XCTAssert(viewportRect3 == expected3, "Failed conversion from \(String(describing:boundingBox3))")
     }
     
