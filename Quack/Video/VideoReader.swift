@@ -16,6 +16,7 @@ import Darwin
 
 class VideoReader: VideoOutputProvider {
     static private let millisecondsInSecond: Float32 = 1000.0
+    static private let veryLongTimeInterval: CFTimeInterval = (256.0 * 365.0 * 24.0 * 60.0 * 60.0)
     
     var frameRateInMilliseconds: Float32 {
         return self.videoTrack.nominalFrameRate
@@ -24,17 +25,16 @@ class VideoReader: VideoOutputProvider {
     var frameRateInSeconds: Float32 {
         return self.frameRateInMilliseconds * VideoReader.millisecondsInSecond
     }
-    
-    var affineTransform: CGAffineTransform {
-        return self.videoTrack.preferredTransform.inverted()
-    }
-    
 
+    private let videoReaderQueue = DispatchQueue(label: "com.hecticant.quack.videoReader", qos: .userInteractive)
+    private var _nextFrame: CVPixelBuffer?
+    
     private var videoAsset: AVAsset!
     private var videoTrack: AVAssetTrack!
     private var assetReader: AVAssetReader!
     private var videoAssetReaderOutput: AVAssetReaderTrackOutput!
     private weak var videoLayer: AVSampleBufferDisplayLayer!
+    
     
     init?(layer: AVSampleBufferDisplayLayer, videoAsset: AVAsset) {
         self.videoAsset = videoAsset
@@ -42,9 +42,7 @@ class VideoReader: VideoOutputProvider {
         self.videoTrack = array[0]
         self.videoLayer = layer
         
-        guard self.restartReading() else {
-            return nil
-        }
+        guard self.restartReading() else { return nil }
     }
     
     func restartReading() -> Bool {
@@ -56,38 +54,57 @@ class VideoReader: VideoOutputProvider {
         }
         
         self.videoAssetReaderOutput = AVAssetReaderTrackOutput(track: self.videoTrack, outputSettings: [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange])
-        guard self.videoAssetReaderOutput != nil else {
-            return false
-        }
-        
         self.videoAssetReaderOutput.alwaysCopiesSampleData = true
         
-        guard self.assetReader.canAdd(videoAssetReaderOutput) else {
+        if self.assetReader.canAdd(videoAssetReaderOutput) {
+            self.assetReader.add(videoAssetReaderOutput)
+        } else {
             return false
         }
         
-        self.assetReader.add(videoAssetReaderOutput)
+        if let timebase = controlTimebase() {
+            videoLayer.controlTimebase = timebase
+            startRequestingMediaData()
+            return true
+        }
         
-        return self.assetReader.startReading()
+        return false
+    }
+    
+    private func controlTimebase() -> CMTimebase? {
+        var timebase: CMTimebase?
+        CMTimebaseCreateWithMasterClock(allocator: kCFAllocatorDefault, masterClock: CMClockGetHostTimeClock(), timebaseOut: &timebase)
+        
+        if let timebase = timebase {
+            assetReader.timeRange = CMTimeRangeMake(start: CMTimebaseGetTime(timebase), duration: videoAsset.duration)
+            if self.assetReader.startReading() {
+                let sampleBuffer = self.videoAssetReaderOutput.copyNextSampleBuffer()!
+                var timingInfo = CMSampleTimingInfo()
+                CMSampleBufferGetSampleTimingInfo(sampleBuffer, at: 0, timingInfoOut: &timingInfo)
+                CMTimebaseSetTime(timebase, time:timingInfo.presentationTimeStamp);
+                CMTimebaseSetRate(timebase, rate: 1.0);
+            }
+        }
+        
+        return timebase
+    }
+    
+    private func startRequestingMediaData() {
+        videoLayer.requestMediaDataWhenReady(on: videoReaderQueue) {
+            guard let sampleBuffer = self.videoAssetReaderOutput.copyNextSampleBuffer() else {
+                self._nextFrame = nil
+                return
+            }
+            self.videoLayer.enqueue(sampleBuffer)
+            self._nextFrame = CMSampleBufferGetImageBuffer(sampleBuffer)
+        }
     }
     
     func nextFrame() -> CVPixelBuffer? {
-        guard let sampleBuffer = self.videoAssetReaderOutput.copyNextSampleBuffer() else {
-            return nil
-        }
-        
-        if self.videoLayer.isReadyForMoreMediaData {
-            self.videoLayer.enqueue(sampleBuffer)
-        }
-        
-        return CMSampleBufferGetImageBuffer(sampleBuffer)
+        return _nextFrame
     }
     
     func outputSize() -> CGSize {
         return videoTrack.naturalSize
-    }
-    
-    func preferredTransform() -> CGAffineTransform {
-        return videoTrack.preferredTransform.inverted()
     }
 }

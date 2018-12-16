@@ -44,6 +44,8 @@ class QuackARDelegate : NSObject, ObjectTrackerDelegate {
     
 
     func didPredict(result: ObjectTrackerResult) {
+        if !duckTracker.tracking { return }
+        
         switch result {
         case .success(let observations):
             updateTrackedObjects(for: observations)

@@ -14,12 +14,17 @@ public enum ObjectTrackerResult {
     case success([TrackedObject])
 }
 
+public protocol ObjectTrackerObserver {
+    
+}
+
 public protocol ObjectTrackerDelegate: class {
     func didPredict(result: ObjectTrackerResult)
 }
 
 public protocol ObjectTrackerDataSource: class {
     var nextFrame: CVPixelBuffer? { get }
+    var frameRateInSeconds: Float32 { get }
 }
 
 protocol ObjectTracker {

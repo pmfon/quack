@@ -16,7 +16,7 @@ struct VideoOutputProviderOptions {
 public protocol VideoOutputProvider {
     func nextFrame() -> CVPixelBuffer?
     func outputSize() -> CGSize
-    func preferredTransform() -> CGAffineTransform
+    var frameRateInSeconds: Float32 { get }
 }
 
 func BuildVideoOutputProvider(view: UIView, options: VideoOutputProviderOptions) -> VideoOutputProvider? {

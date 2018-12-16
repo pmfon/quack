@@ -22,7 +22,7 @@ public class DuckTracker: ObjectTracker, VisionHelper {
     private var trackedObjects = [TrackedObject]()
     private(set) var tracking = false
     private let minConfidence = Float(0.25)
-    private let maxAge = 30
+    private let maxAge = 10
 
     required public init(withModel model: MLModel, dataSource: ObjectTrackerDataSource, delegate: ObjectTrackerDelegate) {
         self.model = model
@@ -51,6 +51,8 @@ public class DuckTracker: ObjectTracker, VisionHelper {
                     } catch {
                         self.handleFeatureError(error)
                     }
+                    
+                    //usleep(useconds_t(self.dataSource.frameRateInSeconds))
             }
             
             self.tracking = false
@@ -77,10 +79,10 @@ public class DuckTracker: ObjectTracker, VisionHelper {
         delegate?.didPredict(result: .error(error))
     }
     
-    private func handleFeatureResults(_ results:  [VNRecognizedObjectObservation]) {
+    private func handleFeatureResults(_ results: [VNRecognizedObjectObservation]) {
         os_log("Predicted %d features", log:visionLog, type: .debug, results.count)
         results.forEach { logObservation($0) }
-
+ 
         updateTracked(results)
         delegate?.didPredict(result: .success(trackedObjects))
     }

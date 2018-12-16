@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 class QuackViewController: UIViewController, ObjectTrackerDataSource {
-    #if DEBUG
+    #if false
     private typealias ViewType = VideoPlaybackView
     #else
     private typealias ViewType = VideoCaptureView
@@ -28,6 +28,10 @@ class QuackViewController: UIViewController, ObjectTrackerDataSource {
         return outputProvider.nextFrame()
     }
 
+    var frameRateInSeconds: Float32 {
+        return outputProvider.frameRateInSeconds
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +52,7 @@ class QuackViewController: UIViewController, ObjectTrackerDataSource {
 
         let outputConverter = VideoLayerViewportConverter(view: previewView, outputProvider: outputProvider)
         arDelegate = QuackARDelegate(with: previewView, outputConverter: outputConverter) { delegate in
-            let duckTracker = DuckTracker(withModel: Duck().model, dataSource: self, delegate: delegate)
+            let duckTracker = DuckTracker(withModel: cat().model, dataSource: self, delegate: delegate)
             return duckTracker
         }
     }
