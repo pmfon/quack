@@ -57,9 +57,9 @@ class BoundingBoxView: UIView {
 
     override func draw(_ rect: CGRect) {
         let path = UIBezierPath(rect: self.bounds)
-        path.lineWidth = 3.0
+        path.lineWidth = 4.0
         
-        if observation.confidence < 0.5 {
+        if observation.confidence < 0.8 {
             let  dashes: [CGFloat] = [4.0, 4.0]
             path.setLineDash(dashes, count: dashes.count, phase: 0.0)
         }

@@ -29,8 +29,8 @@ public class DuckTracker: ObjectTracker, VisionHelper {
             }
         }
     }
-    private let minConfidence = Float(0.25)
-    private let maxAge = 10
+    private let minConfidence = Float(0.40)
+    private let maxAge = 24
 
     required public init(withModel model: MLModel, dataSource: ObjectTrackerDataSource, delegate: ObjectTrackerDelegate) {
         self.model = model
@@ -59,8 +59,6 @@ public class DuckTracker: ObjectTracker, VisionHelper {
                     } catch {
                         self.handleFeatureError(error)
                     }
-                    
-                    //usleep(useconds_t(self.dataSource.frameRateInSeconds))
             }
             
             self.tracking = false
