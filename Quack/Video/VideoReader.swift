@@ -15,20 +15,15 @@ import AVFoundation
 import Darwin
 
 class VideoReader: VideoOutputProvider {
-    static private let millisecondsInSecond: Float32 = 1000.0
+    
     static private let veryLongTimeInterval: CFTimeInterval = (256.0 * 365.0 * 24.0 * 60.0 * 60.0)
-    
-    var frameRateInMilliseconds: Float32 {
-        return self.videoTrack.nominalFrameRate
-    }
-    
-    var frameRateInSeconds: Float32 {
-        return self.frameRateInMilliseconds * VideoReader.millisecondsInSecond
-    }
-
-    private let videoReaderQueue = DispatchQueue(label: "com.hecticant.quack.videoReader", qos: .userInteractive)
     private var _nextFrame: CVPixelBuffer?
+    private let videoReaderQueue = DispatchQueue(label: "com.hecticant.quack.videoReader", qos: .userInteractive)
     
+    var lastTime: CMTime!
+    let clock = CMClockGetHostTimeClock()
+    var frameRateInSeconds: Float32 = 0
+
     private var videoAsset: AVAsset!
     private var videoTrack: AVAssetTrack!
     private var assetReader: AVAssetReader!
@@ -42,6 +37,7 @@ class VideoReader: VideoOutputProvider {
         self.videoTrack = array[0]
         self.videoLayer = layer
         
+        lastTime = CMClockGetTime(clock)
         guard self.restartReading() else { return nil }
     }
     
@@ -73,7 +69,7 @@ class VideoReader: VideoOutputProvider {
     
     private func controlTimebase() -> CMTimebase? {
         var timebase: CMTimebase?
-        CMTimebaseCreateWithMasterClock(allocator: kCFAllocatorDefault, masterClock: CMClockGetHostTimeClock(), timebaseOut: &timebase)
+        CMTimebaseCreateWithMasterClock(allocator: kCFAllocatorDefault, masterClock: clock, timebaseOut: &timebase)
         
         if let timebase = timebase {
             assetReader.timeRange = CMTimeRangeMake(start: CMTimebaseGetTime(timebase), duration: videoAsset.duration)
@@ -101,6 +97,12 @@ class VideoReader: VideoOutputProvider {
     }
     
     func nextFrame() -> CVPixelBuffer? {
+        let currentTime = CMClockGetTime(clock)
+        let difference = CMTimeSubtract(currentTime, lastTime)
+        let seconds = CMTimeGetSeconds(difference)
+        frameRateInSeconds = Float32(1.0 / seconds)
+        lastTime = currentTime
+
         return _nextFrame
     }
     

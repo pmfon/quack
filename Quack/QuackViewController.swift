@@ -11,7 +11,7 @@ import AVFoundation
 
 class QuackViewController: UIViewController, ObjectTrackerDataSource, ObjectTrackerDelegate {
     
-    #if DEBUG_
+    #if DEBUG
     private typealias ViewType = VideoPlaybackView
     #else
     private typealias ViewType = VideoCaptureView
@@ -20,6 +20,7 @@ class QuackViewController: UIViewController, ObjectTrackerDataSource, ObjectTrac
     @IBOutlet var previewViewContainer: UIView!
     @IBOutlet var toggleSession: UIButton!
     @IBOutlet var fpsLabel: UILabel!
+    private var runLoopObserver: CFRunLoopObserver?
     
     private var previewView: ViewType!
     private var duckProcessor: DuckProcessor!
@@ -35,7 +36,6 @@ class QuackViewController: UIViewController, ObjectTrackerDataSource, ObjectTrac
     var frameRateInSeconds: Float32 {
         return outputProvider.frameRateInSeconds
     }
-    
 
     // MARK: ObjectTrackerDelegate
     
@@ -51,18 +51,36 @@ class QuackViewController: UIViewController, ObjectTrackerDataSource, ObjectTrac
     func didStartTracking() {
         DispatchQueue.main.async {
             self.toggleSession.isSelected = true
+            self.startUpdatingFPSCounter()
         }
+    }
+    
+    private func startUpdatingFPSCounter() {
+        let observer = CFRunLoopObserverCreateWithHandler(kCFAllocatorDefault, CFRunLoopActivity.beforeWaiting.rawValue, true, 0) { (observer, _) in
+            self.fpsLabel.text = String(format: "%.1f", self.outputProvider.frameRateInSeconds)
+        }
+        let mainRunLoop = CFRunLoopGetMain()
+        CFRunLoopAddObserver(mainRunLoop, observer, CFRunLoopMode.defaultMode)
+        runLoopObserver = observer
     }
     
     func didStopTracking(error: Error?) {
         DispatchQueue.main.async {
+            self.stopUpdatingFPSCounter()
             self.toggleSession.isSelected = false
+            
             if let error = error {
                 self.presentError(error)
             }
         }
     }
     
+    private func stopUpdatingFPSCounter() {
+        if let observer = runLoopObserver {
+            let mainRunLoop = CFRunLoopGetMain()
+            CFRunLoopRemoveObserver(mainRunLoop, observer, CFRunLoopMode.defaultMode)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

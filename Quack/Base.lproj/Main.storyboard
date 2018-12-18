@@ -25,36 +25,52 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CDm-Ps-wtt">
                                 <rect key="frame" x="0.0" y="587" width="375" height="80"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7tD-n3-5uU">
-                                        <rect key="frame" x="163.5" y="16" width="48" height="48"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SU5-UH-ueJ">
+                                        <rect key="frame" x="46" y="21" width="40" height="14"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="1p7-r6-oLV"/>
+                                            <constraint firstAttribute="height" constant="14" id="PJz-fT-3e0"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="12"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FPS:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HBG-kA-rQk">
+                                        <rect key="frame" x="8" y="21" width="30" height="14"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="14" id="OcC-3g-9ku"/>
+                                            <constraint firstAttribute="width" constant="30" id="nKH-H7-Uvu"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="12"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7tD-n3-5uU">
+                                        <rect key="frame" x="295" y="8" width="72" height="40"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" id="3EE-CB-Avh"/>
+                                            <constraint firstAttribute="width" constant="72" id="NQl-rg-dlN"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="17"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                                        <state key="normal" image="Play"/>
-                                        <state key="selected" image="Stop"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="4"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
+                                        <state key="normal" title="Track"/>
+                                        <state key="selected" title="Stop"/>
                                         <connections>
                                             <action selector="didToggleSession:" destination="BV1-FR-VrT" eventType="touchUpInside" id="yqT-V4-Ofu"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SU5-UH-ueJ">
-                                        <rect key="frame" x="8" y="0.0" width="60" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="SU5-UH-ueJ" firstAttribute="leading" secondItem="HBG-kA-rQk" secondAttribute="trailing" constant="8" id="KYv-XY-AOd"/>
+                                    <constraint firstItem="7tD-n3-5uU" firstAttribute="top" secondItem="CDm-Ps-wtt" secondAttribute="top" constant="8" id="Mn3-q4-0c1"/>
                                     <constraint firstAttribute="height" constant="80" id="QDb-qv-8zJ"/>
-                                    <constraint firstItem="7tD-n3-5uU" firstAttribute="centerX" secondItem="CDm-Ps-wtt" secondAttribute="centerX" id="c43-Ue-VE1"/>
-                                    <constraint firstItem="7tD-n3-5uU" firstAttribute="centerY" secondItem="CDm-Ps-wtt" secondAttribute="centerY" id="tWo-f3-VSR"/>
+                                    <constraint firstAttribute="trailing" secondItem="7tD-n3-5uU" secondAttribute="trailing" constant="8" id="dLw-no-oJ5"/>
+                                    <constraint firstItem="HBG-kA-rQk" firstAttribute="leading" secondItem="CDm-Ps-wtt" secondAttribute="leading" constant="8" id="p2k-E5-ADW"/>
+                                    <constraint firstItem="SU5-UH-ueJ" firstAttribute="centerY" secondItem="HBG-kA-rQk" secondAttribute="centerY" id="qrG-Dy-IeZ"/>
+                                    <constraint firstItem="HBG-kA-rQk" firstAttribute="centerY" secondItem="7tD-n3-5uU" secondAttribute="centerY" id="xsu-t9-OAZ"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -86,8 +102,4 @@
             <point key="canvasLocation" x="140" y="105.69715142428787"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="Play" width="28" height="28"/>
-        <image name="Stop" width="28" height="28"/>
-    </resources>
 </document>

@@ -78,7 +78,8 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Vide
     func nextFrame() -> CVPixelBuffer? {
         let currentTime = CMClockGetTime(clock)
         let difference = CMTimeSubtract(currentTime, lastTime)
-        frameRateInSeconds = Float32(1.0 / CMTimeGetSeconds(difference))
+        let seconds = CMTimeGetSeconds(difference)
+        frameRateInSeconds = Float32(1.0 / seconds)
         lastTime = currentTime
         
         return _nextFrame
