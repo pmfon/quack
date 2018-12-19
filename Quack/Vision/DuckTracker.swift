@@ -29,8 +29,8 @@ public class DuckTracker: ObjectTracker, VisionHelper {
             }
         }
     }
-    private let minConfidence = Float(0.40)
-    private let maxAge = 24
+    private let minConfidence = Float(0.35)
+    private let maxAge = 10
 
     required public init(withModel model: MLModel, dataSource: ObjectTrackerDataSource, delegate: ObjectTrackerDelegate) {
         self.model = model
@@ -103,19 +103,26 @@ public class DuckTracker: ObjectTracker, VisionHelper {
         // Ignore observations below the defined confidence threshold.
         var unprocessedObservations = observations.filter { $0.confidence > minConfidence }
         
+        // Skip the distance calculation for what are likely new observations.
+        var trackedCandidates = unprocessedObservations.filter { observation in
+            trackedObjects.contains { DuckTracker.intersectionOverUnion(observation.boundingBox, $0.observation.boundingBox) > 0 }
+        }
+        
         // The naïve version: calculate the distance between centroids to find the observations
         // that track existing objects.
-        var distances = unprocessedObservations.map { observation in
+        var distances = trackedCandidates.map { observation in
             trackedObjects.map { $0.observation.boundingBox.distance(to: observation.boundingBox) }
         }
         while distances.count > 0 {
             let (minRow, minCol, min) = distances.removeMinRow()!
-            let observation = unprocessedObservations.remove(at: minRow)
+            let observation = trackedCandidates.remove(at: minRow)
             if min < 1.0 {
-                trackedObjects[minCol].observation = observation
+                trackedObjects[minCol].update(observation)
                 trackedObjects[minCol].staleness = 0
-            } else {
-                unprocessedObservations.append(observation)
+                
+                if let index = unprocessedObservations.index(of: observation) {
+                    unprocessedObservations.remove(at: index)
+                }
             }
         }
             

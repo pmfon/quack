@@ -11,7 +11,7 @@ import AVFoundation
 
 class QuackViewController: UIViewController, ObjectTrackerDataSource, ObjectTrackerDelegate {
     
-    #if DEBUG_
+    #if DEBUG
     private typealias ViewType = VideoPlaybackView
     #else
     private typealias ViewType = VideoCaptureView

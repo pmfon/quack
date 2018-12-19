@@ -15,15 +15,15 @@ class BoundingBoxView: UIView {
     private let converter: VisionOutputConverter
     let strokeColor: UIColor
 
-    var observation: VNDetectedObjectObservation {
+    var observation: TrackedObject {
         didSet {
             update(with: observation)
         }
     }
     
-    private func update(with observation: VNDetectedObjectObservation) {
-        frame = converter.convertRect(from: observation.boundingBox)
-        confidenceLabel?.text = String(format: "%.2f", observation.confidence)
+    private func update(with observation: TrackedObject) {
+        frame = converter.convertRect(from: observation.weightedBoundingBox)
+        confidenceLabel?.text = String(format: "%.2f", observation.observation.confidence)
         setNeedsDisplay()
     }
     
@@ -31,12 +31,12 @@ class BoundingBoxView: UIView {
         return nil
     }
     
-    init(with observation: VNDetectedObjectObservation, converter: VisionOutputConverter) {
+    init(with observation: TrackedObject, converter: VisionOutputConverter) {
         self.observation = observation
         self.converter = converter
         self.strokeColor = BoundingBoxView.nextColor()
         
-        let frame = converter.convertRect(from: observation.boundingBox)
+        let frame = converter.convertRect(from: observation.weightedBoundingBox)
         super.init(frame: frame)
         self.isOpaque = false
         
@@ -59,7 +59,7 @@ class BoundingBoxView: UIView {
         let path = UIBezierPath(rect: self.bounds)
         path.lineWidth = 4.0
         
-        if observation.confidence < 0.8 {
+        if observation.observation.confidence < 0.8 {
             let  dashes: [CGFloat] = [4.0, 4.0]
             path.setLineDash(dashes, count: dashes.count, phase: 0.0)
         }

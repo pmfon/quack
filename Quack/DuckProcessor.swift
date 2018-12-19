@@ -51,9 +51,9 @@ class DuckProcessor : NSObject {
     private func updateBoundingBoxes(for observations: [TrackedObject]) {
         for observation in observations {
             if let bbox = boundingBoxes[observation.trackingUUID] {
-                bbox.observation = observation.observation
+                bbox.observation = observation
             } else {
-                let bbView = BoundingBoxView(with: observation.observation, converter: outputConverter)
+                let bbView = BoundingBoxView(with: observation, converter: outputConverter)
                 boundingBoxes[observation.trackingUUID] = bbView
                 trackedView.addSubview(bbView)
             }

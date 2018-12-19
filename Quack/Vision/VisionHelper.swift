@@ -19,7 +19,7 @@ extension VisionHelper {
         return .up
     }
     
-    static func intersectionOverUnion(_ r1: CGRect, _ r2: CGRect, converter: VisionOutputConverter?) -> Float {
+    static func intersectionOverUnion(_ r1: CGRect, _ r2: CGRect, converter: VisionOutputConverter? = nil) -> Float {
         let rect1 = converter?.convertRect(from: r1) ?? r1
         let rect2 = converter?.convertRect(from: r2) ?? r2
         
