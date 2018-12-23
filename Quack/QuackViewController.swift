@@ -11,7 +11,7 @@ import AVFoundation
 
 class QuackViewController: UIViewController, ObjectTrackerDataSource, ObjectTrackerDelegate {
     
-    #if DEBUG
+    #if DEBUG_
     private typealias ViewType = VideoPlaybackView
     #else
     private typealias ViewType = VideoCaptureView
@@ -95,7 +95,10 @@ class QuackViewController: UIViewController, ObjectTrackerDataSource, ObjectTrac
     }
     
     private func configureAndPresentScene() {
-        let asset = AVAsset(url: Bundle.main.url(forResource: "IMG_0299", withExtension: "mov")!)
+        var asset: AVAsset? = nil
+        #if DEBUG
+        asset = AVAsset(url: Bundle.main.url(forResource: "IMG_0299", withExtension: "mov")!)
+        #endif
         outputProvider = BuildVideoOutputProvider(view: previewView, options: VideoOutputProviderOptions(asset: asset))
 
         let duckTracker = DuckTracker(withModel: Duck().model, dataSource: self, delegate: self)
