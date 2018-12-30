@@ -1,6 +1,7 @@
 # Quack!
 An object detection experiment with CoreML and Vision.
 
+![](https://user-images.githubusercontent.com/22856066/50550279-6f4c1c80-0c65-11e9-947b-ec8bf3146bb4.gif)
 
 ## What is this?
 Quack detects (and tracks) ducks, with the help of machine learning. Actually, it should be a matter of replacing the model to track just about anything.
